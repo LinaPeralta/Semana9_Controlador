@@ -22,9 +22,6 @@ public class UDPconnection extends Thread {
     private IObserver observer;
 
 
-	/*public void setObserver(MainActivity mainActivity){
-		this.mainActivity = mainActivity;
-	}*/
 
 	public UDPconnection (IObserver observer){
 		this.observer = observer;
@@ -50,7 +47,6 @@ public class UDPconnection extends Thread {
 
 					mensaje = new String(packet.getData()).trim();
 					System.out.println(mensaje);
-					//mainActivity.recibir(mensaje);
 					observer.recibirMensaje(mensaje);
 
 				}catch (Exception e){

@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements IObserver {
         gson = new Gson();
 
         udp = new UDPconnection(this);
-       // udp.setObserver(this);
         udp.start();
 
 
@@ -77,12 +76,7 @@ public class MainActivity extends AppCompatActivity implements IObserver {
                 });
     }
 
-    /*public void recibir(String mensaje){
-        runOnUiThread(()->{
-            Log.d(">>>",mensaje);
-            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
-        });
-    }*/
+
 
 
     @Override
