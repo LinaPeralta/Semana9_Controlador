@@ -3,6 +3,8 @@ package com.example.main;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -10,14 +12,22 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import events.IObserver;
+
 public class UDPconnection extends Thread {
 	
 	private DatagramSocket socket;
 	private String mensaje;
 	private MainActivity mainActivity;
+    private IObserver observer;
 
-	public void setObserver(MainActivity mainActivity){
+
+	/*public void setObserver(MainActivity mainActivity){
 		this.mainActivity = mainActivity;
+	}*/
+
+	public UDPconnection (IObserver observer){
+		this.observer = observer;
 	}
 	
 	public void run() {
@@ -32,7 +42,7 @@ public class UDPconnection extends Thread {
 				
 				byte [] buffer = new byte[100];
 				DatagramPacket packet = new DatagramPacket(buffer,buffer.length);
-				System.out.println("Esperando datagrama");
+				//System.out.println("Esperando datagrama");
 				try {
 
 					socket.receive(packet);
@@ -40,8 +50,8 @@ public class UDPconnection extends Thread {
 
 					mensaje = new String(packet.getData()).trim();
 					System.out.println(mensaje);
-					//Toast.makeText(mainActivity, mensaje, Toast.LENGTH_SHORT).show();
-					mainActivity.recibir(mensaje);
+					//mainActivity.recibir(mensaje);
+					observer.recibirMensaje(mensaje);
 
 				}catch (Exception e){
 					e.printStackTrace();
@@ -86,8 +96,9 @@ public class UDPconnection extends Thread {
 
 			
 		}).start();
-
 		
 	}
+
+
 
 }
